@@ -1,21 +1,24 @@
 #include <iostream>
 #include "token.h"
+#include "lexer.h"
 
 int main() {
-    std::cout << "CVM++ v0.1 booting...\n";
+    std::cout << "CVM++ v0.1 booting...\n\n";
 
-    Token t;
-    t.type   = TokenType::NUMBER;
-    t.lexeme = "42";
-    t.line   = 1;
+    std::string source = "let x = 42 + 5;";
+    std::cout << "Source: " << source << "\n\n";
 
-    std::cout << "Token: "
-              << tokenTypeToString(t.type)
-              << " → '"
-              << t.lexeme
-              << "' (line "
-              << t.line
-              << ")\n";
+    Lexer lexer(source);
+    std::vector<Token> tokens = lexer.tokenize();
+
+    std::cout << "Tokens:\n";
+    for (auto& t : tokens) {
+        std::cout << "  "
+                  << tokenTypeToString(t.type)
+                  << " -> '"
+                  << t.lexeme
+                  << "'\n";
+    }
 
     return 0;
 }
